@@ -1,0 +1,20 @@
+/* Base Application Styles */
+.main{
+	color: #2f2;
+}
+
+.imageNameDiv{
+	overflow: hidden;
+	position: relative;
+}
+
+.inDiv{
+	float: left;
+	margin: 5px;
+	vertical-align: text-bottom;
+	bottom: 5px;
+}
+
+.indexColumn{
+	weight:20px;
+}

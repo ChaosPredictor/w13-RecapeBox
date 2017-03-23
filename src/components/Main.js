@@ -44,12 +44,20 @@ class MainComponent extends React.Component {
 		this.state = {
 			recipes: DATA
 		};
+		this.myFunction = this.myFunction.bind(this);
   }
+
+	myFunction() {
+		var temp = this.state.recipes.slice()
+		temp.push({name:"newOne"})
+		this.setState({ recipes: temp })
+	}
 
 	render() {
     return (
       <div className="main">
-				<RecipesTable recipes={this.state.recipes} />,	
+				<RecipesTable recipes={this.state.recipes} />
+				<button onClick={this.myFunction}>Activate Lasers</button>
       </div>
     );
   }

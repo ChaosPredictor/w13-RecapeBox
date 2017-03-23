@@ -57,7 +57,8 @@ class MainComponent extends React.Component {
     super(props);
 		this.state = {
 			recipes: DATA,
-      modalIsOpen: false
+      modalIsOpen: false,
+			lastId: 4
 		};
 		this.myFunction = this.myFunction.bind(this);
     this.openModal = this.openModal.bind(this);
@@ -80,8 +81,15 @@ class MainComponent extends React.Component {
 	
 	myFunction() {
 		var temp = this.state.recipes.slice()
-		temp.push({name:"newOne",id:4})
-		this.setState({ recipes: temp, modalIsOpen: false })
+		temp.push({name:"newOne",id:this.state.lastId});
+		console.log("last Id; " +  this.state.lastId);
+		this.setState({ 
+			recipes: temp, 
+			modalIsOpen: false 
+		});
+    this.setState(prevstate => ({
+      lastId: prevstate.lastId+1
+    }));
 	}
 
 	render() {

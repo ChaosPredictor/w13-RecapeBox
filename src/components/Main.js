@@ -58,12 +58,14 @@ class MainComponent extends React.Component {
 		this.state = {
 			recipes: DATA,
       modalIsOpen: false,
-			lastId: 4
+			lastId: 4,
+			input: ''
 		};
 		this.myFunction = this.myFunction.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.handleFilterTextInputChange = this.handleFilterTextInputChange.bind(this);
   }
 
   openModal() {
@@ -81,7 +83,7 @@ class MainComponent extends React.Component {
 	
 	myFunction() {
 		var temp = this.state.recipes.slice()
-		temp.push({name:"newOne",id:this.state.lastId});
+		temp.push({name:this.state.input,id:this.state.lastId});
 		console.log("last Id; " +  this.state.lastId);
 		this.setState({ 
 			recipes: temp, 
@@ -91,6 +93,12 @@ class MainComponent extends React.Component {
       lastId: prevstate.lastId+1
     }));
 	}
+
+  handleFilterTextInputChange(e) {
+    this.setState({
+      input: e.target.value
+    });
+  }
 
 	render() {
     return (
@@ -107,7 +115,10 @@ class MainComponent extends React.Component {
         >
 
           <h2 ref="subtitle">Hello</h2>
-          <input />
+          <input 
+						value={this.state.input}
+						onChange={this.handleFilterTextInputChange}
+					/>
           <form>
 						<button onClick={this.closeModal}>Close</button>
             <button onClick={this.myFunction}>Add</button>

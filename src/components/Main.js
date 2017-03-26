@@ -4,7 +4,7 @@ require('styles/Main.css');
 import React from 'react';
 import Modal from 'react-modal';
 
-var DATA = [{name:"pi", id:0, ingredients:["first","sencond","thred"]}, {name:"cheaps", id:1, ingredients:["first","sencond","thred"]}, {name:"fdgd", id:2, ingredients:["first","sencond","thred"]}]
+var DATA = [{name:'pi', id:0, ingredients:['first','sencond','thred']}, {name:'cheaps', id:1, ingredients:['first','sencond','thred']}, {name:'fdgd', id:2, ingredients:['first','sencond','thred']}]
 
 const appElement = document.getElementById('your-app-element');
 
@@ -19,11 +19,34 @@ const customStyles = {
   }
 };
 
+
+class ItemBody extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+	render() {
+		var rows = [];
+		this.props.body.forEach((piece) => {
+			rows.push(<tr><td>{piece}</td></tr>);
+		});
+		return (
+			<table>
+				<tbody>
+					{rows}
+				</tbody>
+			</table>
+		)
+	}
+}
+
 class Item extends React.Component {
+  constructor(props) {
+    super(props);
+  }
   render() {
     return (
       <tr>
-        <td><div>{this.props.recipe.name}</div><div>{this.props.recipe.ingredients[0]}</div></td>
+        <td><div>{this.props.recipe.name}</div><ItemBody body={this.props.recipe.ingredients} /></td>
       </tr>
     );
   }

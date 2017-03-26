@@ -59,13 +59,15 @@ class MainComponent extends React.Component {
 			recipes: DATA,
       modalIsOpen: false,
 			lastId: 4,
-			input: ''
+			title: '',
+			body: ''
 		};
 		this.myFunction = this.myFunction.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
-    this.handleFilterTextInputChange = this.handleFilterTextInputChange.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleBodyChange = this.handleBodyChange.bind(this);
   }
 
   openModal() {
@@ -83,7 +85,7 @@ class MainComponent extends React.Component {
 	
 	myFunction() {
 		var temp = this.state.recipes.slice()
-		temp.push({name:this.state.input,id:this.state.lastId});
+		temp.push({name:this.state.title,id:this.state.lastId});
 		console.log("last Id; " +  this.state.lastId);
 		this.setState({ 
 			recipes: temp, 
@@ -94,11 +96,18 @@ class MainComponent extends React.Component {
     }));
 	}
 
-  handleFilterTextInputChange(e) {
+  handleTitleChange(e) {
     this.setState({
-      input: e.target.value
+      title: e.target.value
     });
   }
+
+	handleBodyChange(e) {
+    this.setState({
+      body: e.target.value
+    });
+  }
+
 
 	render() {
     return (
@@ -116,9 +125,12 @@ class MainComponent extends React.Component {
 
           <h2 ref="subtitle">Hello</h2>
           <input 
-						value={this.state.input}
-						onChange={this.handleFilterTextInputChange}
-					/>
+						value={this.state.title}
+						onChange={this.handleTitleChange} />
+					<textarea 
+						value={this.state.body} 
+						onFocus={ this.onFocus } 
+						onChange={this.handleBodyChange} />
           <form>
 						<button onClick={this.closeModal}>Close</button>
             <button onClick={this.myFunction}>Add</button>

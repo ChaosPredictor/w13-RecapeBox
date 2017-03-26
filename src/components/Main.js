@@ -4,7 +4,7 @@ require('styles/Main.css');
 import React from 'react';
 import Modal from 'react-modal';
 
-var DATA = [{name:"pi", id:0}, {name:"cheaps", id:1}, {name:"fdgd", id:2}]
+var DATA = [{name:"pi", id:0, ingredients:["first","sencond","thred"]}, {name:"cheaps", id:1, ingredients:["first","sencond","thred"]}, {name:"fdgd", id:2, ingredients:["first","sencond","thred"]}]
 
 const appElement = document.getElementById('your-app-element');
 
@@ -19,11 +19,11 @@ const customStyles = {
   }
 };
 
-class ProductRow extends React.Component {
+class Item extends React.Component {
   render() {
     return (
       <tr>
-        <td>{this.props.recipe.name}</td>
+        <td><div>{this.props.recipe.name}</div><div>{this.props.recipe.ingredients[0]}</div></td>
       </tr>
     );
   }
@@ -37,10 +37,8 @@ class RecipesTable extends React.Component {
 
   render() {
     var rows = [];
-    var lastCategory = null;
-    console.log(this.props.inStockOnly)
     this.props.recipes.forEach((recipe) => {
-      rows.push(<ProductRow recipe={recipe} key={recipe.id} />);
+      rows.push(<Item recipe={recipe} key={recipe.id} />);
     });
     return (
       <table>

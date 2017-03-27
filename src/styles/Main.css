@@ -18,3 +18,13 @@
 .indexColumn{
 	weight:20px;
 }
+
+.itemBox {
+	background-color: red;
+	border: 2px;
+}
+
+.pieceBox {
+	background-color: green;
+	border: 2px;
+}

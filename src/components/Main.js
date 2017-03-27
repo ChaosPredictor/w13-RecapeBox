@@ -4,9 +4,12 @@ require('styles/Main.css');
 import React from 'react';
 import Modal from 'react-modal';
 
-var DATA = [{name:'pi', id:0, ingredients:['first','sencond','thred']}, {name:'cheaps', id:1, ingredients:['first','sencond','thred']}, {name:'fdgd', id:2, ingredients:['first','sencond','thred']}]
+var DATA = [
+{name:'pi', id:0, ingredients:['first1','sencond1','thred1']},
+{name:'cheaps', id:1, ingredients:['first2','sencond2','thred2']},
+{name:'fdgd', id:2, ingredients:['first3','sencond3','thred3']}]
 
-const appElement = document.getElementById('your-app-element');
+//const appElement = document.getElementById('your-app-element');
 
 const customStyles = {
   content : {
@@ -19,16 +22,31 @@ const customStyles = {
   }
 };
 
+class Piece extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+    return (
+      <tr className="pieceBox">
+        <td><div>{this.props.piece}</div></td>
+      </tr>
+    );
+  }
+}
 
-class ItemBody extends React.Component {
+
+class BodyTable extends React.Component {
   constructor(props) {
     super(props);
   }
 	render() {
 		var rows = [];
-		this.props.body.forEach((piece) => {
-			rows.push(<tr><td>{piece}</td></tr>);
-		});
+		if (this.props.show) {
+			this.props.body.forEach((piece) => {
+				rows.push(<Piece piece = {piece} />);
+			});
+		}
 		return (
 			<table>
 				<tbody>
@@ -42,11 +60,19 @@ class ItemBody extends React.Component {
 class Item extends React.Component {
   constructor(props) {
     super(props);
+		this.myFunction = this.myFunction.bind(this);
   }
+
+	myFunction() {
+		var id = this.props.recipe.id;
+		//alert({key});
+		console.log(id);
+	}
+
   render() {
     return (
-      <tr>
-        <td><div>{this.props.recipe.name}</div><ItemBody body={this.props.recipe.ingredients} /></td>
+      <tr onClick={this.myFunction} className="itemBox">
+        <td><div>{this.props.recipe.name}</div><BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} /></td>
       </tr>
     );
   }
@@ -55,13 +81,17 @@ class Item extends React.Component {
 class RecipesTable extends React.Component {
   constructor(props) {
     super(props);
-  //  this.handleInStockInputChange = this.handleInStockInputChange.bind(this);
+		this.state = {
+			current: 1
+		};
   }
 
   render() {
     var rows = [];
     this.props.recipes.forEach((recipe) => {
-      rows.push(<Item recipe={recipe} key={recipe.id} />);
+			var show = (this.state.current === recipe.id) ? true : false;
+			console.log(show);
+      rows.push(<Item recipe={recipe} key={recipe.id} current={ show }/>);
     });
     return (
       <table>
@@ -107,10 +137,10 @@ class MainComponent extends React.Component {
 	myFunction() {
 		var temp = this.state.recipes.slice()
 		temp.push({name:this.state.title,id:this.state.lastId});
-		console.log("last Id; " +  this.state.lastId);
-		this.setState({ 
-			recipes: temp, 
-			modalIsOpen: false 
+		//console.log('last Id; ' +  this.state.lastId);
+		this.setState({
+			recipes: temp,
+			modalIsOpen: false
 		});
     this.setState(prevstate => ({
       lastId: prevstate.lastId+1
@@ -145,12 +175,12 @@ class MainComponent extends React.Component {
         >
 
           <h2 ref="subtitle">Hello</h2>
-          <input 
+          <input
 						value={this.state.title}
 						onChange={this.handleTitleChange} />
-					<textarea 
-						value={this.state.body} 
-						onFocus={ this.onFocus } 
+					<textarea
+						value={this.state.body}
+						onFocus={ this.onFocus }
 						onChange={this.handleBodyChange} />
           <form>
 						<button onClick={this.closeModal}>Close</button>

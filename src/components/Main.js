@@ -65,7 +65,7 @@ class Item extends React.Component {
 
 	myFunction() {
 		var id = this.props.recipe.id;
-		//alert({key});
+		this.props.onCurrentChange(id);
 		console.log(id);
 	}
 
@@ -84,14 +84,26 @@ class RecipesTable extends React.Component {
 		this.state = {
 			current: 1
 		};
+		this.handleCurrentChange = this.handleCurrentChange.bind(this);
   }
+
+	handleCurrentChange(itemId){
+		this.setState({
+			current: itemId
+		});
+	}
 
   render() {
     var rows = [];
     this.props.recipes.forEach((recipe) => {
 			var show = (this.state.current === recipe.id) ? true : false;
 			console.log(show);
-      rows.push(<Item recipe={recipe} key={recipe.id} current={ show }/>);
+      rows.push(<Item 
+					recipe={recipe} 
+					key={recipe.id} 
+					current={ show }
+          onCurrentChange={this.handleCurrentChange}
+					/>);
     });
     return (
       <table>

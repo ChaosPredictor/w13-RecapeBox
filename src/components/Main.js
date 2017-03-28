@@ -5,9 +5,9 @@ import React from 'react';
 import Modal from 'react-modal';
 
 var DATA = [
-{name:'pi', id:0, ingredients:['first1','sencond1','thred1']},
-{name:'cheaps', id:1, ingredients:['first2','sencond2','thred2']},
-{name:'fdgd', id:2, ingredients:['first3','sencond3','thred3']}]
+{name:'pi', id:0, ingredients:'first1,sencond1,thred1'},
+{name:'cheaps', id:1, ingredients:'first2,sencond2,thred2'},
+{name:'fdgd', id:2, ingredients:'first3,sencond3,thred3'}]
 
 //const appElement = document.getElementById('your-app-element');
 
@@ -43,7 +43,7 @@ class BodyTable extends React.Component {
 	render() {
 		var rows = [];
 		if (this.props.show && this.props.body != null) {
-			this.props.body.forEach((piece) => {
+			this.props.body.split(',').forEach((piece) => {
 				rows.push(<Piece piece = {piece} />);
 			});
 		}
@@ -154,7 +154,11 @@ class MainComponent extends React.Component {
 	
 	myFunction() {
 		var temp = this.state.recipes.slice()
-		temp.push({name:this.state.title,id:this.state.lastId});
+		temp.push({
+			name:this.state.title,
+			id:this.state.lastId,
+			ingredients:this.state.body
+		});
 		//console.log('last Id; ' +  this.state.lastId);
 		this.setState({
 			recipes: temp,

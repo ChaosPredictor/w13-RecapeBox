@@ -82,15 +82,21 @@ class RecipesTable extends React.Component {
   constructor(props) {
     super(props);
 		this.state = {
-			current: 1
+			current: null
 		};
 		this.handleCurrentChange = this.handleCurrentChange.bind(this);
   }
 
 	handleCurrentChange(itemId){
-		this.setState({
-			current: itemId
-		});
+		if (itemId === this.state.current) {	
+			this.setState({
+				current: null
+			});
+		} else {
+			this.setState({
+				current: itemId
+			});
+		}
 	}
 
   render() {

@@ -42,7 +42,7 @@ class BodyTable extends React.Component {
   }
 	render() {
 		var rows = [];
-		if (this.props.show) {
+		if (this.props.show && this.props.body != null) {
 			this.props.body.forEach((piece) => {
 				rows.push(<Piece piece = {piece} />);
 			});
@@ -191,7 +191,6 @@ class MainComponent extends React.Component {
           style={customStyles}
           contentLabel="Example Modal"
         >
-
           <h2 ref="subtitle">Hello</h2>
           <input
 						value={this.state.title}

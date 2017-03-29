@@ -20,11 +20,15 @@
 }
 
 .itemBox {
-	background-color: red;
+	background-color: blue;
 	border: 2px;
 }
 
 .pieceBox {
 	background-color: green;
 	border: 2px;
+}
+
+.deleteButton {
+	background-color: red;
 }

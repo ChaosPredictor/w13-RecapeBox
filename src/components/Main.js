@@ -72,7 +72,11 @@ class Item extends React.Component {
   render() {
     return (
       <tr onClick={this.myFunction} className="itemBox">
-        <td><div>{this.props.recipe.name}</div><BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} /></td>
+        <td>
+					<div>{this.props.recipe.name}</div>
+					<BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} />
+					<button className = "deleteButton" onClick={this.props.myFunction}>Delete</button>
+				</td>
       </tr>
     );
   }
@@ -109,6 +113,7 @@ class RecipesTable extends React.Component {
 					key={recipe.id}
 					current={ show }
           onCurrentChange={this.handleCurrentChange}
+					onDeleteItem={this.props.onDeleteItem}
 					/>);
     });
     return (
@@ -137,6 +142,7 @@ class MainComponent extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
+		this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
   openModal() {
@@ -181,12 +187,20 @@ class MainComponent extends React.Component {
     });
   }
 
+	handleDeleteItem(index) {
+		var array = this.state.recipes;
+		array.splice(0, 1);
+		this.setState({recipes: array });
+	}
 
 	render() {
     return (
       <div className="main">
-				<RecipesTable recipes={this.state.recipes} />
+				<RecipesTable 
+					recipes={this.state.recipes}
+					onDeleteItem={this.handleDeleteItem}/>
         <button onClick={this.myFunction}>Add</button>
+        <button onClick={this.handleDeleteItem}>Delete</button>
         <button onClick={this.openModal}>Open Modal</button>
         <Modal
           isOpen={this.state.modalIsOpen}

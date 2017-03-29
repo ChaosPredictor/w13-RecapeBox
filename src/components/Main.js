@@ -42,11 +42,11 @@ class BodyTable extends React.Component {
   }
 	render() {
 		var rows = [];
-		if (this.props.show && this.props.body != null) {
-			this.props.body.split(',').forEach((piece) => {
-				rows.push(<Piece piece = {piece} />);
-			});
-		}
+//		if (this.props.show && this.props.body != null) {
+		this.props.body.split(',').forEach((piece) => {
+			rows.push(<Piece piece = {piece} />);
+		});
+//		}
 		return (
 			<table>
 				<tbody>
@@ -74,8 +74,10 @@ class Item extends React.Component {
       <tr onClick={this.myFunction} className="itemBox">
         <td>
 					<div>{this.props.recipe.name}</div>
-					<BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} />
-					<button className = "deleteButton" onClick={this.props.myFunction}>Delete</button>
+					{this.props.current &&
+						<BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} />
+					}
+
 				</td>
       </tr>
     );

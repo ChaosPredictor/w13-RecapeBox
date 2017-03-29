@@ -60,22 +60,32 @@ class BodyTable extends React.Component {
 class Item extends React.Component {
   constructor(props) {
     super(props);
-		this.myFunction = this.myFunction.bind(this);
+		this.handleCurrentOpenedChange = this.handleCurrentOpenedChange.bind(this);
+		this.handleCurrentDelete = this.handleCurrentDelete.bind(this);
   }
 
-	myFunction() {
+	handleCurrentOpenedChange() {
 		var id = this.props.recipe.id;
 		this.props.onCurrentChange(id);
 		//console.log(id);
 	}
 
+	handleCurrentDelete() {
+		var id = this.props.recipe.id;
+		this.props.onCurrentDelete(id);
+		//console.log("Current id: " + id);
+	}
+
   render() {
     return (
-      <tr onClick={this.myFunction} className="itemBox">
+      <tr className="itemBox">
         <td>
-					<div>{this.props.recipe.name}</div>
+					<div onClick={this.handleCurrentOpenedChange}>{this.props.recipe.name}</div>
 					{this.props.current &&
-						<BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} />
+						<div>
+							<BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} />
+							<button onClick={this.handleCurrentDelete}>Delete</button>
+						</div>
 					}
 
 				</td>
@@ -105,6 +115,10 @@ class RecipesTable extends React.Component {
 		}
 	}
 
+	handleDeleteItem(itemId){
+		console.log("someone what to delete me: " + itemId);
+	}
+
   render() {
     var rows = [];
     this.props.recipes.forEach((recipe) => {
@@ -115,7 +129,7 @@ class RecipesTable extends React.Component {
 					key={recipe.id}
 					current={ show }
           onCurrentChange={this.handleCurrentChange}
-					onDeleteItem={this.props.onDeleteItem}
+					onCurrentDelete={this.handleDeleteItem}
 					/>);
     });
     return (

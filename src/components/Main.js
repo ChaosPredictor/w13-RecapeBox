@@ -43,9 +43,11 @@ class BodyTable extends React.Component {
   }
 	render() {
 		var rows = [];
+		var i = 0;
 //		if (this.props.show && this.props.body != null) {
 		this.props.body.split(',').forEach((piece) => {
-			rows.push(<Piece piece = {piece} />);
+			rows.push(<Piece piece = {piece} key={i}/>);
+			i = i + 1;
 		});
 //		}
 		return (

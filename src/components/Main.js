@@ -3,7 +3,7 @@ require('styles/Main.css');
 
 import React from 'react';
 import Modal from 'react-modal';
-import $ from 'jquery'
+//import $ from 'jquery'
 
 var DATA = [
 {name:'pi', id:0, ingredients:'first1,sencond1,thred1'},
@@ -118,7 +118,7 @@ class RecipesTable extends React.Component {
 	}
 
 	handleDeleteItem(itemId){
-		console.log("someone what to delete me: " + itemId);
+		//:console.log("someone what to delete me: " + itemId);
 		this.props.onDeleteItem(itemId);
 	}
 
@@ -194,13 +194,6 @@ class MainComponent extends React.Component {
     }));
 	}
 
-	returnIndexOfId(array, value) {
-		var result = $.grep( array, function( n, i ) {
-			return n.id = value;
-		});
-		return result;
-	}
-
   handleTitleChange(e) {
     this.setState({
       title: e.target.value
@@ -214,10 +207,10 @@ class MainComponent extends React.Component {
   }
 
 	handleDeleteItem(id) {
-		console.log("it's delete: " + index);
+		//console.log("it's delete: " + index);
 		var array = this.state.recipes;
-		var index = array.map(function(e) { return e.id; }).indexOf(id);;
-		console.log("list to delete: " + index);
+		var index = array.map(function(e) { return e.id; }).indexOf(id);
+		//console.log("list to delete: " + index);
 		//findedIndexs.forEach((findedIndex) => {
 		array.splice(index, 1);
 		//});
@@ -227,12 +220,10 @@ class MainComponent extends React.Component {
 	render() {
     return (
       <div className="main">
-				<RecipesTable 
+				<RecipesTable
 					recipes={this.state.recipes}
 					onDeleteItem={this.handleDeleteItem}/>
-        <button onClick={this.myFunction}>Add</button>
-        <button onClick={this.handleDeleteItem}>Delete</button>
-        <button onClick={this.openModal}>Open Modal</button>
+        <button onClick={this.openModal}>Add Recape</button>
         <Modal
           isOpen={this.state.modalIsOpen}
           onAfterOpen={this.afterOpenModal}

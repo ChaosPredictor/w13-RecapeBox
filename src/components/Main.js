@@ -3,6 +3,7 @@ require('styles/Main.css');
 
 import React from 'react';
 import Modal from 'react-modal';
+import $ from 'jquery'
 
 var DATA = [
 {name:'pi', id:0, ingredients:'first1,sencond1,thred1'},
@@ -101,6 +102,7 @@ class RecipesTable extends React.Component {
 			current: null
 		};
 		this.handleCurrentChange = this.handleCurrentChange.bind(this);
+		this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
 	handleCurrentChange(itemId){
@@ -117,6 +119,7 @@ class RecipesTable extends React.Component {
 
 	handleDeleteItem(itemId){
 		console.log("someone what to delete me: " + itemId);
+		this.props.onDeleteItem(itemId);
 	}
 
   render() {
@@ -191,6 +194,13 @@ class MainComponent extends React.Component {
     }));
 	}
 
+	returnIndexOfId(array, value) {
+		var result = $.grep( array, function( n, i ) {
+			return n.id = value;
+		});
+		return result;
+	}
+
   handleTitleChange(e) {
     this.setState({
       title: e.target.value
@@ -203,9 +213,14 @@ class MainComponent extends React.Component {
     });
   }
 
-	handleDeleteItem(index) {
+	handleDeleteItem(id) {
+		console.log("it's delete: " + index);
 		var array = this.state.recipes;
-		array.splice(0, 1);
+		var index = array.map(function(e) { return e.id; }).indexOf(id);;
+		console.log("list to delete: " + index);
+		//findedIndexs.forEach((findedIndex) => {
+		array.splice(index, 1);
+		//});
 		this.setState({recipes: array });
 	}
 

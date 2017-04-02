@@ -145,25 +145,19 @@ class RecipesTable extends React.Component {
   }
 }
 
-
-class MainComponent extends React.Component {
+class Dialog extends React.Component {
 	
   constructor(props) {
     super(props);
 		this.state = {
-			recipes: DATA,
-      modalIsOpen: false,
-			lastId: 4,
 			title: '',
 			body: ''
 		};
-		this.myFunction = this.myFunction.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
-		this.handleDeleteItem = this.handleDeleteItem.bind(this);
   }
 
   openModal() {
@@ -178,6 +172,77 @@ class MainComponent extends React.Component {
   closeModal() {
     this.setState({modalIsOpen: false});
   }
+	
+  handleTitleChange(e) {
+    this.setState({
+      title: e.target.value
+    });
+  }
+
+	handleBodyChange(e) {
+    this.setState({
+      body: e.target.value
+    });
+  }
+
+	render() {
+    return (
+      <Modal
+        isOpen={this.state.modalIsOpen}
+        onAfterOpen={this.afterOpenModal}
+        onRequestClose={this.closeModal}
+        style={customStyles}
+        contentLabel="Example Modal"
+      >
+        <h2 ref="subtitle">Hello</h2>
+        <input
+				value={this.state.title}
+				onChange={this.handleTitleChange} />
+				<textarea
+				value={this.state.body}
+				onFocus={ this.onFocus }
+				onChange={this.handleBodyChange} />
+        <form>
+					<button onClick={this.closeModal}>Close</button>
+				  <button onClick={this.myFunction}>Add</button>
+        </form>
+      </Modal>
+    );
+  }
+}
+
+class MainComponent extends React.Component {
+	
+  constructor(props) {
+    super(props);
+		this.state = {
+			recipes: DATA,
+//      modalIsOpen: false,
+			lastId: 4,
+			title: '',
+			body: ''
+		};
+		this.myFunction = this.myFunction.bind(this);
+    //this.openModal = this.openModal.bind(this);
+    //this.afterOpenModal = this.afterOpenModal.bind(this);
+    //this.closeModal = this.closeModal.bind(this);
+    this.handleTitleChange = this.handleTitleChange.bind(this);
+    this.handleBodyChange = this.handleBodyChange.bind(this);
+		this.handleDeleteItem = this.handleDeleteItem.bind(this);
+  }
+
+/*  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    this.refs.subtitle.style.color = '#f00';
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
+  }*/
 	
 	myFunction() {
 		var temp = this.state.recipes.slice()
@@ -224,29 +289,11 @@ class MainComponent extends React.Component {
       <div className="main">
 				<RecipesTable
 					recipes={this.state.recipes}
-					onDeleteItem={this.handleDeleteItem}/>
-        <button onClick={this.openModal}>Add Recape</button>
-        <Modal
-          isOpen={this.state.modalIsOpen}
-          onAfterOpen={this.afterOpenModal}
-          onRequestClose={this.closeModal}
-          style={customStyles}
-          contentLabel="Example Modal"
-        >
-          <h2 ref="subtitle">Hello</h2>
-          <input
-						value={this.state.title}
-						onChange={this.handleTitleChange} />
-					<textarea
-						value={this.state.body}
-						onFocus={ this.onFocus }
-						onChange={this.handleBodyChange} />
-          <form>
-						<button onClick={this.closeModal}>Close</button>
-            <button onClick={this.myFunction}>Add</button>
-          </form>
-        </Modal>
-      </div>
+					onDeleteItem={this.handleDeleteItem}
+				/>
+        <button onClick={() => this.refs.dialog.openModal()}>Add Recape</button>
+				<Dialog ref="dialog" />
+			</div>
     );
   }
 }

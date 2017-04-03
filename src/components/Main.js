@@ -158,6 +158,7 @@ class Dialog extends React.Component {
     this.closeModal = this.closeModal.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
+		this.handleAddItem = this.handleAddItem.bind(this);
   }
 
   openModal() {
@@ -185,6 +186,13 @@ class Dialog extends React.Component {
     });
   }
 
+	handleAddItem() {
+		//alert("title: " + this.state.title + " / body: " + this.state.body);
+		this.props.onAddItem(this.state.title, this.state.body);
+		//this.closeModal;
+	}
+
+
 	render() {
     return (
       <Modal
@@ -204,7 +212,7 @@ class Dialog extends React.Component {
 				onChange={this.handleBodyChange} />
         <form>
 					<button onClick={this.closeModal}>Close</button>
-				  <button onClick={this.myFunction}>Add</button>
+				  <button onClick={this.handleAddItem}>Add</button>
         </form>
       </Modal>
     );
@@ -222,13 +230,14 @@ class MainComponent extends React.Component {
 			title: '',
 			body: ''
 		};
-		this.myFunction = this.myFunction.bind(this);
+		this.addItem = this.addItem.bind(this);
     //this.openModal = this.openModal.bind(this);
     //this.afterOpenModal = this.afterOpenModal.bind(this);
     //this.closeModal = this.closeModal.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
 		this.handleDeleteItem = this.handleDeleteItem.bind(this);
+		this.handleAddItem = this.handleAddItem.bind(this);
   }
 
 /*  openModal() {
@@ -244,12 +253,12 @@ class MainComponent extends React.Component {
     this.setState({modalIsOpen: false});
   }*/
 	
-	myFunction() {
+	addItem(title, body) {
 		var temp = this.state.recipes.slice()
 		temp.push({
-			name:this.state.title,
+			name:title,
 			id:this.state.lastId,
-			ingredients:this.state.body
+			ingredients:body
 		});
 		//console.log('last Id; ' +  this.state.lastId);
 		this.setState({
@@ -284,6 +293,12 @@ class MainComponent extends React.Component {
 		this.setState({recipes: array });
 	}
 
+	handleAddItem(title, body) {
+		alert("handleAddItem Work!!! " + title);
+		this.addItem(title, body);
+		this.ref.dialog.closeModal();
+	}
+
 	render() {
     return (
       <div className="main">
@@ -292,7 +307,7 @@ class MainComponent extends React.Component {
 					onDeleteItem={this.handleDeleteItem}
 				/>
         <button onClick={() => this.refs.dialog.openModal()}>Add Recape</button>
-				<Dialog ref="dialog" />
+				<Dialog ref="dialog" onAddItem={this.handleAddItem} />
 			</div>
     );
   }

@@ -294,7 +294,7 @@ class MainComponent extends React.Component {
 	}
 
 	handleAddItem(title, body) {
-		alert("handleAddItem Work!!! " + title);
+		alert('handleAddItem Work!!! ' + title);
 		this.addItem(title, body);
 		this.ref.dialog.closeModal();
 	}

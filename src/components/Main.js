@@ -11,6 +11,7 @@ var DATA = [
 {name:'fdgd', id:2, ingredients:'first3,sencond3,thred3'}]
 
 //const appElement = document.getElementById('your-app-element');
+//add localstorage
 
 const customStyles = {
   content : {

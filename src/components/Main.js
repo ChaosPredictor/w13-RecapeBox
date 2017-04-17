@@ -10,6 +10,8 @@ var DATA = [
 {name:'cheaps', id:1, ingredients:'first2,sencond2,thred2'},
 {name:'fdgd', id:2, ingredients:'first3,sencond3,thred3'}]
 
+
+var data = JSON.parse(localStorage.getItem('recipes')) || [];;
 //const appElement = document.getElementById('your-app-element');
 //add localstorage
 
@@ -225,9 +227,9 @@ class MainComponent extends React.Component {
   constructor(props) {
     super(props);
 		this.state = {
-			recipes: DATA,
+			recipes: data,
 //      modalIsOpen: false,
-			lastId: 4,
+			lastId: data.length + 1,
 			title: '',
 			body: ''
 		};
@@ -266,6 +268,13 @@ class MainComponent extends React.Component {
 			recipes: temp,
 			modalIsOpen: false
 		});
+
+    //var todos = this.props.todos;
+    //todos.push(React.findDOMNode(this.refs.myInput).value);
+    //React.findDOMNode(this.refs.myInput).value = "";
+    localStorage.setItem('recipes', JSON.stringify(temp));
+    //this.setState({ todos: todos });
+
     this.setState(prevstate => ({
       lastId: prevstate.lastId+1
     }));
@@ -296,6 +305,7 @@ class MainComponent extends React.Component {
 
 	handleAddItem(title, body) {
 		alert('handleAddItem Work!!! ' + title);
+//		localStorage.setItem('itemsArray', "for test data");
 		this.addItem(title, body);
 		this.ref.dialog.closeModal();
 	}

@@ -5,13 +5,21 @@ import React from 'react';
 import Modal from 'react-modal';
 //import $ from 'jquery'
 
-var DATA = [
+var defaultRecipes = [
 {name:'pi', id:0, ingredients:'first1,sencond1,thred1'},
 {name:'cheaps', id:1, ingredients:'first2,sencond2,thred2'},
 {name:'fdgd', id:2, ingredients:'first3,sencond3,thred3'}]
 
 
-var data = JSON.parse(localStorage.getItem('recipes')) || [];;
+var Recipes = JSON.parse(localStorage.getItem('recipes')) || defaultRecipes;
+//var LastId = JSON.parse(localStorage.getItem('lastId')) || defaultRecipes.length;
+var LastId = JSON.parse(localStorage.getItem('lastId'));
+if (LastId !== null) {
+	LastId = LastId;
+} else {
+	LastId = defaultRecipes.length;
+}
+
 //const appElement = document.getElementById('your-app-element');
 //add localstorage
 
@@ -227,9 +235,10 @@ class MainComponent extends React.Component {
   constructor(props) {
     super(props);
 		this.state = {
-			recipes: data,
+			recipes: Recipes,
+
 //      modalIsOpen: false,
-			lastId: data.length + 1,
+			lastId: LastId,
 			title: '',
 			body: ''
 		};
@@ -268,15 +277,11 @@ class MainComponent extends React.Component {
 			recipes: temp,
 			modalIsOpen: false
 		});
-
-    //var todos = this.props.todos;
-    //todos.push(React.findDOMNode(this.refs.myInput).value);
-    //React.findDOMNode(this.refs.myInput).value = "";
     localStorage.setItem('recipes', JSON.stringify(temp));
-    //this.setState({ todos: todos });
-
-    this.setState(prevstate => ({
-      lastId: prevstate.lastId+1
+		localStorage.setItem('lastId', JSON.stringify(this.state.lastId+1));
+		//this.setState({ lastId: this.state.lastId + 1 });
+    this.setState(prevState => ({
+      lastId: prevState.lastId + 1
     }));
 	}
 
@@ -300,11 +305,12 @@ class MainComponent extends React.Component {
 		//findedIndexs.forEach((findedIndex) => {
 		array.splice(index, 1);
 		//});
+    localStorage.setItem('recipes', JSON.stringify(array));
 		this.setState({recipes: array });
 	}
 
 	handleAddItem(title, body) {
-		alert('handleAddItem Work!!! ' + title);
+//		alert('handleAddItem Work!!! ' + title);
 //		localStorage.setItem('itemsArray', "for test data");
 		this.addItem(title, body);
 		this.ref.dialog.closeModal();

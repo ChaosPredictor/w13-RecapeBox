@@ -76,6 +76,7 @@ class Item extends React.Component {
     super(props);
 		this.handleCurrentOpenedChange = this.handleCurrentOpenedChange.bind(this);
 		this.handleCurrentDelete = this.handleCurrentDelete.bind(this);
+		this.handleCurrentEdit = this.handleCurrentEdit.bind(this);
   }
 
 	handleCurrentOpenedChange() {
@@ -90,6 +91,12 @@ class Item extends React.Component {
 		//console.log("Current id: " + id);
 	}
 
+	handleCurrentEdit() {
+		var id = this.props.recipe.id;
+		//this.props.onCurrentDelete(id);
+		//alert("Edit Current id: " );
+	}
+
   render() {
     return (
       <tr className="itemBox">
@@ -99,6 +106,7 @@ class Item extends React.Component {
 						<div>
 							<BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} />
 							<button onClick={this.handleCurrentDelete}>Delete</button>
+							<button onClick={this.handleCurrentEdit}>Edit</button>
 						</div>
 					}
 

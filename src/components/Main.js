@@ -93,7 +93,7 @@ class Item extends React.Component {
 
 	handleCurrentEdit() {
 		var id = this.props.recipe.id;
-		//this.props.onCurrentDelete(id);
+		this.props.onCurrentEdit(id);
 		//alert("Edit Current id: " );
 	}
 
@@ -124,6 +124,7 @@ class RecipesTable extends React.Component {
 		};
 		this.handleCurrentChange = this.handleCurrentChange.bind(this);
 		this.handleDeleteItem = this.handleDeleteItem.bind(this);
+		this.handleEditItem = this.handleEditItem.bind(this);
   }
 
 	handleCurrentChange(itemId){
@@ -143,6 +144,12 @@ class RecipesTable extends React.Component {
 		this.props.onDeleteItem(itemId);
 	}
 
+	handleEditItem(itemId){
+		//:console.log("someone what to delete me: " + itemId);
+		this.props.onDeleteItem(itemId);
+		alert("in RecipesTable: Item Edit");
+	}
+
   render() {
     var rows = [];
     this.props.recipes.forEach((recipe) => {
@@ -154,6 +161,7 @@ class RecipesTable extends React.Component {
 					current={ show }
           onCurrentChange={this.handleCurrentChange}
 					onCurrentDelete={this.handleDeleteItem}
+					onCurrentEdit={this.handleEditItem}
 					/>);
     });
     return (

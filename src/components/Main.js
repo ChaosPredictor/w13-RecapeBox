@@ -226,11 +226,13 @@ class Dialog extends React.Component {
 	}
 
 	render() {
-		var action;
+		var action, subtitle;
 		if (this.state.action == 'Add') {
 			action = <button onClick={this.handleAddItem}>Add</button>;
+			subtitle = <h2 ref="subtitle">Add new recipe</h2>;
 		} else {
 		  action = <button onClick={this.handleUpdateItem}>Update</button>;
+			subtitle = <h2 ref="subtitle">Edit this one</h2>;
 		}
     return (
       <Modal
@@ -239,7 +241,7 @@ class Dialog extends React.Component {
         onRequestClose={this.closeModal}
         style={customStyles}
         contentLabel="Example Modal">
-        <h2 ref="subtitle">Hello</h2>
+        {subtitle}
         <input
 					value={this.state.title}
 					onChange={this.handleTitleChange} />

@@ -146,7 +146,7 @@ class RecipesTable extends React.Component {
 
 	handleEditItem(itemId){
 		//:console.log("someone what to delete me: " + itemId);
-		this.props.onDeleteItem(itemId);
+		this.props.onEditItem(itemId);
 	}
 
   render() {
@@ -188,9 +188,24 @@ class Dialog extends React.Component {
 		this.handleAddItem = this.handleAddItem.bind(this);
   }
 
-  openModal(act) {
-		this.state.action = act;
-    this.setState({modalIsOpen: true});
+	setData (title, body) {
+		this.setState({title: title, body: body});
+	}
+
+  openModal(action, title, body) {
+		if (action == "Add") {
+			this.setState({modalIsOpen: true, 
+				action: action, 
+				title: '', 
+				body: ''
+			});
+		} else {
+			this.setState({modalIsOpen: true, 
+				action: action, 
+				title: title,
+				body: body
+			});
+		}
   }
 
   afterOpenModal() {
@@ -314,8 +329,9 @@ class MainComponent extends React.Component {
 	handleEditItem(id) {
 		var array = this.state.recipes;
 		var index = array.map(function(e) { return e.id; }).indexOf(id);
-		alert("Edit in Main");
-		this.refs.dialog.openModal("Edit")
+		//alert("Edit in Main");
+		//this.refs.dialog.setData(array[index].name,array[index].ingredients);
+		this.refs.dialog.openModal("Edit",array[index].name,array[index].ingredients)
 		//array.splice(index, 1);
     //localStorage.setItem('recipes', JSON.stringify(array));
 		//this.setState({recipes: array });
@@ -334,7 +350,7 @@ class MainComponent extends React.Component {
 					onDeleteItem={this.handleDeleteItem}
 					onEditItem={this.handleEditItem}
 				/>
-        <button onClick={() => this.refs.dialog.openModal("Edit")}>Add Recape</button>
+        <button onClick={() => this.refs.dialog.openModal("Add")}>Add Recape</button>
 				<Dialog ref="dialog" onAddItem={this.handleAddItem} />
 			</div>
     );

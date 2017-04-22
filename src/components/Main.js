@@ -193,15 +193,15 @@ class Dialog extends React.Component {
 	}
 
   openModal(action, title, body) {
-		if (action == "Add") {
-			this.setState({modalIsOpen: true, 
-				action: action, 
-				title: '', 
+		if (action == 'Add') {
+			this.setState({modalIsOpen: true,
+				action: action,
+				title: '',
 				body: ''
 			});
 		} else {
-			this.setState({modalIsOpen: true, 
-				action: action, 
+			this.setState({modalIsOpen: true,
+				action: action,
 				title: title,
 				body: body
 			});
@@ -238,7 +238,7 @@ class Dialog extends React.Component {
 
 	render() {
 		var action;
-		if (this.state.action == "Add") {
+		if (this.state.action == 'Add') {
 			action = <button onClick={this.handleAddItem}>Add</button>;
 		} else {
 		  action = <button onClick={this.handleAddItem}>Edit</button>;
@@ -261,7 +261,7 @@ class Dialog extends React.Component {
 				onChange={this.handleBodyChange} />
         <form>
 					<button onClick={this.closeModal}>Close</button>
-					{action} 
+					{action}
         </form>
       </Modal>
     );
@@ -331,7 +331,7 @@ class MainComponent extends React.Component {
 		var index = array.map(function(e) { return e.id; }).indexOf(id);
 		//alert("Edit in Main");
 		//this.refs.dialog.setData(array[index].name,array[index].ingredients);
-		this.refs.dialog.openModal("Edit",array[index].name,array[index].ingredients)
+		this.refs.dialog.openModal('Edit',array[index].name,array[index].ingredients)
 		//array.splice(index, 1);
     //localStorage.setItem('recipes', JSON.stringify(array));
 		//this.setState({recipes: array });
@@ -350,7 +350,7 @@ class MainComponent extends React.Component {
 					onDeleteItem={this.handleDeleteItem}
 					onEditItem={this.handleEditItem}
 				/>
-        <button onClick={() => this.refs.dialog.openModal("Add")}>Add Recape</button>
+        <button onClick={() => this.refs.dialog.openModal('Add')}>Add Recape</button>
 				<Dialog ref="dialog" onAddItem={this.handleAddItem} />
 			</div>
     );

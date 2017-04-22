@@ -147,7 +147,6 @@ class RecipesTable extends React.Component {
 	handleEditItem(itemId){
 		//:console.log("someone what to delete me: " + itemId);
 		this.props.onDeleteItem(itemId);
-		alert("in RecipesTable: Item Edit");
 	}
 
   render() {
@@ -178,7 +177,8 @@ class Dialog extends React.Component {
     super(props);
 		this.state = {
 			title: '',
-			body: ''
+			body: '',
+			action: ''
 		};
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -188,7 +188,8 @@ class Dialog extends React.Component {
 		this.handleAddItem = this.handleAddItem.bind(this);
   }
 
-  openModal() {
+  openModal(act) {
+		this.state.action = act;
     this.setState({modalIsOpen: true});
   }
 
@@ -221,6 +222,12 @@ class Dialog extends React.Component {
 
 
 	render() {
+		var action;
+		if (this.state.action == "Add") {
+			action = <button onClick={this.handleAddItem}>Add</button>;
+		} else {
+		  action = <button onClick={this.handleAddItem}>Edit</button>;
+		}
     return (
       <Modal
         isOpen={this.state.modalIsOpen}
@@ -239,7 +246,7 @@ class Dialog extends React.Component {
 				onChange={this.handleBodyChange} />
         <form>
 					<button onClick={this.closeModal}>Close</button>
-				  <button onClick={this.handleAddItem}>Add</button>
+					{action} 
         </form>
       </Modal>
     );
@@ -259,28 +266,13 @@ class MainComponent extends React.Component {
 			body: ''
 		};
 		this.addItem = this.addItem.bind(this);
-    //this.openModal = this.openModal.bind(this);
-    //this.afterOpenModal = this.afterOpenModal.bind(this);
-    //this.closeModal = this.closeModal.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
 		this.handleDeleteItem = this.handleDeleteItem.bind(this);
+		this.handleEditItem = this.handleEditItem.bind(this);
 		this.handleAddItem = this.handleAddItem.bind(this);
   }
 
-/*  openModal() {
-    this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
-  }
-
-  closeModal() {
-    this.setState({modalIsOpen: false});
-  }*/
-	
 	addItem(title, body) {
 		var temp = this.state.recipes.slice()
 		temp.push({
@@ -288,14 +280,12 @@ class MainComponent extends React.Component {
 			id:this.state.lastId,
 			ingredients:body
 		});
-		//console.log('last Id; ' +  this.state.lastId);
 		this.setState({
 			recipes: temp,
 			modalIsOpen: false
 		});
     localStorage.setItem('recipes', JSON.stringify(temp));
 		localStorage.setItem('lastId', JSON.stringify(this.state.lastId+1));
-		//this.setState({ lastId: this.state.lastId + 1 });
     this.setState(prevState => ({
       lastId: prevState.lastId + 1
     }));
@@ -314,20 +304,24 @@ class MainComponent extends React.Component {
   }
 
 	handleDeleteItem(id) {
-		//console.log("it's delete: " + index);
 		var array = this.state.recipes;
 		var index = array.map(function(e) { return e.id; }).indexOf(id);
-		//console.log("list to delete: " + index);
-		//findedIndexs.forEach((findedIndex) => {
 		array.splice(index, 1);
-		//});
     localStorage.setItem('recipes', JSON.stringify(array));
 		this.setState({recipes: array });
 	}
 
+	handleEditItem(id) {
+		var array = this.state.recipes;
+		var index = array.map(function(e) { return e.id; }).indexOf(id);
+		alert("Edit in Main");
+		this.refs.dialog.openModal("Edit")
+		//array.splice(index, 1);
+    //localStorage.setItem('recipes', JSON.stringify(array));
+		//this.setState({recipes: array });
+	}
+
 	handleAddItem(title, body) {
-//		alert('handleAddItem Work!!! ' + title);
-//		localStorage.setItem('itemsArray', "for test data");
 		this.addItem(title, body);
 		this.ref.dialog.closeModal();
 	}
@@ -338,8 +332,9 @@ class MainComponent extends React.Component {
 				<RecipesTable
 					recipes={this.state.recipes}
 					onDeleteItem={this.handleDeleteItem}
+					onEditItem={this.handleEditItem}
 				/>
-        <button onClick={() => this.refs.dialog.openModal()}>Add Recape</button>
+        <button onClick={() => this.refs.dialog.openModal("Edit")}>Add Recape</button>
 				<Dialog ref="dialog" onAddItem={this.handleAddItem} />
 			</div>
     );

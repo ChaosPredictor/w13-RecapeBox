@@ -3,6 +3,7 @@ require('styles/Main.css');
 
 import React from 'react';
 import Modal from 'react-modal';
+import update from 'immutability-helper';
 //import $ from 'jquery'
 
 var defaultRecipes = [
@@ -178,7 +179,8 @@ class Dialog extends React.Component {
 		this.state = {
 			title: '',
 			body: '',
-			action: ''
+			action: '',
+			index: ''
 		};
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
@@ -186,24 +188,22 @@ class Dialog extends React.Component {
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
 		this.handleAddItem = this.handleAddItem.bind(this);
+		this.handleUpdateItem = this.handleUpdateItem.bind(this);
   }
 
-	setData (title, body) {
-		this.setState({title: title, body: body});
-	}
-
-  openModal(action, title, body) {
+  openModal(action, title, body, index) {
 		if (action == 'Add') {
 			this.setState({modalIsOpen: true,
 				action: action,
 				title: '',
 				body: ''
 			});
-		} else {
+		} else { //Edit
 			this.setState({modalIsOpen: true,
 				action: action,
 				title: title,
-				body: body
+				body: body,
+				index: index
 			});
 		}
   }
@@ -230,18 +230,19 @@ class Dialog extends React.Component {
   }
 
 	handleAddItem() {
-		//alert("title: " + this.state.title + " / body: " + this.state.body);
 		this.props.onAddItem(this.state.title, this.state.body);
-		//this.closeModal;
 	}
 
+	handleUpdateItem() {
+		this.props.onUpdateItem(this.state.title, this.state.body, this.state.index);
+	}
 
 	render() {
 		var action;
 		if (this.state.action == 'Add') {
 			action = <button onClick={this.handleAddItem}>Add</button>;
 		} else {
-		  action = <button onClick={this.handleAddItem}>Edit</button>;
+		  action = <button onClick={this.handleUpdateItem}>Update</button>;
 		}
     return (
       <Modal
@@ -274,18 +275,19 @@ class MainComponent extends React.Component {
     super(props);
 		this.state = {
 			recipes: Recipes,
-
-//      modalIsOpen: false,
-			lastId: LastId,
-			title: '',
-			body: ''
+			lastId: LastId
+			//title: '',
+			//body: '',
+			//ind: ''
 		};
 		this.addItem = this.addItem.bind(this);
+		this.updateItem = this.updateItem.bind(this);
     this.handleTitleChange = this.handleTitleChange.bind(this);
     this.handleBodyChange = this.handleBodyChange.bind(this);
 		this.handleDeleteItem = this.handleDeleteItem.bind(this);
 		this.handleEditItem = this.handleEditItem.bind(this);
 		this.handleAddItem = this.handleAddItem.bind(this);
+		this.handleUpdateItem = this.handleUpdateItem.bind(this);
   }
 
 	addItem(title, body) {
@@ -304,6 +306,18 @@ class MainComponent extends React.Component {
     this.setState(prevState => ({
       lastId: prevState.lastId + 1
     }));
+	}
+
+	updateItem(title, body, index) {
+		//alert("fdgdfg:" + title);
+		var data = this.state.recipes;
+    var updatedData = update(data[index], {name: {$set: title}, ingredients: {$set: body}}); 
+
+    var newData = update(data, {
+        $splice: [[index, 1, updatedData]]
+    });
+    this.setState({recipes: newData});
+    localStorage.setItem('recipes', JSON.stringify(newData));
 	}
 
   handleTitleChange(e) {
@@ -331,7 +345,7 @@ class MainComponent extends React.Component {
 		var index = array.map(function(e) { return e.id; }).indexOf(id);
 		//alert("Edit in Main");
 		//this.refs.dialog.setData(array[index].name,array[index].ingredients);
-		this.refs.dialog.openModal('Edit',array[index].name,array[index].ingredients)
+		this.refs.dialog.openModal('Edit',array[index].name,array[index].ingredients, index)
 		//array.splice(index, 1);
     //localStorage.setItem('recipes', JSON.stringify(array));
 		//this.setState({recipes: array });
@@ -339,6 +353,12 @@ class MainComponent extends React.Component {
 
 	handleAddItem(title, body) {
 		this.addItem(title, body);
+		this.ref.dialog.closeModal();
+	}
+
+	handleUpdateItem(title, body, ind) {
+		//alert("handle Update Item");
+		this.updateItem(title, body, ind);
 		this.ref.dialog.closeModal();
 	}
 
@@ -351,7 +371,7 @@ class MainComponent extends React.Component {
 					onEditItem={this.handleEditItem}
 				/>
         <button onClick={() => this.refs.dialog.openModal('Add')}>Add Recape</button>
-				<Dialog ref="dialog" onAddItem={this.handleAddItem} />
+				<Dialog ref="dialog" onAddItem={this.handleAddItem} onUpdateItem={this.handleUpdateItem} />
 			</div>
     );
   }

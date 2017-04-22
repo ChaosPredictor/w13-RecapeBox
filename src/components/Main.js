@@ -4,7 +4,6 @@ require('styles/Main.css');
 import React from 'react';
 import Modal from 'react-modal';
 import update from 'immutability-helper';
-//import $ from 'jquery'
 
 var defaultRecipes = [
 {name:'pi', id:0, ingredients:'first1,sencond1,thred1'},
@@ -13,16 +12,12 @@ var defaultRecipes = [
 
 
 var Recipes = JSON.parse(localStorage.getItem('recipes')) || defaultRecipes;
-//var LastId = JSON.parse(localStorage.getItem('lastId')) || defaultRecipes.length;
 var LastId = JSON.parse(localStorage.getItem('lastId'));
 if (LastId !== null) {
 	LastId = LastId;
 } else {
 	LastId = defaultRecipes.length;
 }
-
-//const appElement = document.getElementById('your-app-element');
-//add localstorage
 
 const customStyles = {
   content : {
@@ -56,12 +51,10 @@ class BodyTable extends React.Component {
 	render() {
 		var rows = [];
 		var i = 0;
-//		if (this.props.show && this.props.body != null) {
 		this.props.body.split(',').forEach((piece) => {
 			rows.push(<Piece piece = {piece} key={i}/>);
 			i = i + 1;
 		});
-//		}
 		return (
 			<table>
 				<tbody>
@@ -83,19 +76,16 @@ class Item extends React.Component {
 	handleCurrentOpenedChange() {
 		var id = this.props.recipe.id;
 		this.props.onCurrentChange(id);
-		//console.log(id);
 	}
 
 	handleCurrentDelete() {
 		var id = this.props.recipe.id;
 		this.props.onCurrentDelete(id);
-		//console.log("Current id: " + id);
 	}
 
 	handleCurrentEdit() {
 		var id = this.props.recipe.id;
 		this.props.onCurrentEdit(id);
-		//alert("Edit Current id: " );
 	}
 
   render() {
@@ -141,12 +131,10 @@ class RecipesTable extends React.Component {
 	}
 
 	handleDeleteItem(itemId){
-		//:console.log("someone what to delete me: " + itemId);
 		this.props.onDeleteItem(itemId);
 	}
 
 	handleEditItem(itemId){
-		//:console.log("someone what to delete me: " + itemId);
 		this.props.onEditItem(itemId);
 	}
 
@@ -154,7 +142,6 @@ class RecipesTable extends React.Component {
     var rows = [];
     this.props.recipes.forEach((recipe) => {
 			var show = (this.state.current === recipe.id) ? true : false;
-			//console.log(show);
       rows.push(<Item
 					recipe={recipe}
 					key={recipe.id}
@@ -250,16 +237,15 @@ class Dialog extends React.Component {
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
         style={customStyles}
-        contentLabel="Example Modal"
-      >
+        contentLabel="Example Modal">
         <h2 ref="subtitle">Hello</h2>
         <input
-				value={this.state.title}
-				onChange={this.handleTitleChange} />
+					value={this.state.title}
+					onChange={this.handleTitleChange} />
 				<textarea
-				value={this.state.body}
-				onFocus={ this.onFocus }
-				onChange={this.handleBodyChange} />
+					value={this.state.body}
+					onFocus={ this.onFocus }
+					onChange={this.handleBodyChange} />
         <form>
 					<button onClick={this.closeModal}>Close</button>
 					{action}
@@ -276,9 +262,6 @@ class MainComponent extends React.Component {
 		this.state = {
 			recipes: Recipes,
 			lastId: LastId
-			//title: '',
-			//body: '',
-			//ind: ''
 		};
 		this.addItem = this.addItem.bind(this);
 		this.updateItem = this.updateItem.bind(this);
@@ -309,7 +292,6 @@ class MainComponent extends React.Component {
 	}
 
 	updateItem(title, body, index) {
-		//alert("fdgdfg:" + title);
 		var data = this.state.recipes;
     var updatedData = update(data[index], {name: {$set: title}, ingredients: {$set: body}});
 
@@ -343,23 +325,17 @@ class MainComponent extends React.Component {
 	handleEditItem(id) {
 		var array = this.state.recipes;
 		var index = array.map(function(e) { return e.id; }).indexOf(id);
-		//alert("Edit in Main");
-		//this.refs.dialog.setData(array[index].name,array[index].ingredients);
 		this.refs.dialog.openModal('Edit',array[index].name,array[index].ingredients, index)
-		//array.splice(index, 1);
-    //localStorage.setItem('recipes', JSON.stringify(array));
-		//this.setState({recipes: array });
 	}
 
 	handleAddItem(title, body) {
 		this.addItem(title, body);
-		this.ref.dialog.closeModal();
+		this.refs.dialog.closeModal();
 	}
 
 	handleUpdateItem(title, body, ind) {
-		//alert("handle Update Item");
 		this.updateItem(title, body, ind);
-		this.ref.dialog.closeModal();
+		this.refs.dialog.closeModal();
 	}
 
 	render() {

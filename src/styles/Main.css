@@ -26,7 +26,8 @@
 	/*margin: 27px;*/
 	padding: 10px;
 	border-radius: 5px;
-	background-color: blue;
+	background-color: #bb99ff;
+	color: blue;
 	border: 1px solid black;
 }
 
@@ -38,6 +39,7 @@
 .pieceBox > td > div {
 	border-top:    1px dotted #000;
 	border-bottom: 1px dotted #000;
+	color: black;
 	padding-top: 8px;
 	padding-right: 15px;
 	padding-bottom: 8px;
@@ -49,6 +51,16 @@
 }
 
 .recipesTable {
+	width: 100%;
+}
+
+.ingredients {
+	color: grey;
+	margin: auto;
+	text-align: center;
+}
+
+.main {
 	background-color: #ff8888;
 	margin: 10px;
 	padding: 20px;
@@ -56,5 +68,9 @@
 	width: 50%;
 	border: 3px solid green;
 	border-radius: 10px;
+}
+
+.addButton {
+
 }
 

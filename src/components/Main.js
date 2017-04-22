@@ -95,6 +95,7 @@ class Item extends React.Component {
 					<div onClick={this.handleCurrentOpenedChange}>{this.props.recipe.name}</div>
 					{this.props.current &&
 						<div>
+							<div className="ingredients">Ingredients</div>
 							<BodyTable show = {this.props.current} body = {this.props.recipe.ingredients} />
 							<button onClick={this.handleCurrentDelete}>Delete</button>
 							<button onClick={this.handleCurrentEdit}>Edit</button>
@@ -346,7 +347,7 @@ class MainComponent extends React.Component {
 					onDeleteItem={this.handleDeleteItem}
 					onEditItem={this.handleEditItem}
 				/>
-        <button onClick={() => this.refs.dialog.openModal('Add')}>Add Recape</button>
+        <button className="addButton" onClick={() => this.refs.dialog.openModal('Add')}>Add Recape</button>
 				<Dialog ref="dialog" onAddItem={this.handleAddItem} onUpdateItem={this.handleUpdateItem} />
 			</div>
     );

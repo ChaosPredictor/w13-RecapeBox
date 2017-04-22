@@ -152,7 +152,7 @@ class RecipesTable extends React.Component {
 					/>);
     });
     return (
-      <table>
+      <table className="recipesTable">
         <tbody>{rows}</tbody>
       </table>
     );

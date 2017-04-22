@@ -20,8 +20,14 @@
 }
 
 .itemBox {
+}
+
+.itemBox > td {
+	/*margin: 27px;*/
+	padding: 10px;
+	border-radius: 5px;
 	background-color: blue;
-	border: 2px;
+	border: 1px solid black;
 }
 
 .pieceBox {
@@ -32,3 +38,14 @@
 .deleteButton {
 	background-color: red;
 }
+
+.recipesTable {
+	background-color: #ff8888;
+	margin: 10px;
+	padding: 20px;
+	margin: auto;
+	width: 50%;
+	border: 3px solid green;
+	border-radius: 10px;
+}
+

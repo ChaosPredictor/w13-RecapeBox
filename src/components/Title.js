@@ -7,7 +7,7 @@ class TitleComponent extends React.Component {
   render() {
     return (
       <div>
-				<h1 className="title"> Template Web </h1>
+				<h1 className="title"> Recipes </h1>
       </div>
     );
   }

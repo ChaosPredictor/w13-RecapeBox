@@ -311,7 +311,7 @@ class MainComponent extends React.Component {
 	updateItem(title, body, index) {
 		//alert("fdgdfg:" + title);
 		var data = this.state.recipes;
-    var updatedData = update(data[index], {name: {$set: title}, ingredients: {$set: body}}); 
+    var updatedData = update(data[index], {name: {$set: title}, ingredients: {$set: body}});
 
     var newData = update(data, {
         $splice: [[index, 1, updatedData]]

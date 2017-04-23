@@ -9,7 +9,7 @@ class FooterComponent extends React.Component {
     return (
 			<footer>
 				<Col md={6}>coded by <a className="text-danger" target="_blank" href="https://www.freecodecamp.com/chaospredictor">Chaos Predictor</a></Col>
-				<Col md={6} className="rightFooter">souces in <a className="text-danger" target="_blank" href="https://github.com/ChaosPredictor/w12-CamperLeaderboard">GitHub</a></Col>
+				<Col md={6} className="rightFooter">souces in <a className="text-danger" target="_blank" href="https://github.com/ChaosPredictor/w13-RecipeBox">GitHub</a></Col>
 			</footer>
 		);
   }

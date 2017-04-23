@@ -6,9 +6,9 @@ import Modal from 'react-modal';
 import update from 'immutability-helper';
 
 var defaultRecipes = [
-{name:'pi', id:0, ingredients:'first1,sencond1,thred1'},
-{name:'cheaps', id:1, ingredients:'first2,sencond2,thred2'},
-{name:'fdgd', id:2, ingredients:'first3,sencond3,thred3'}]
+{name:'Fish and Chips', id:0, ingredients:'4 large potatoes,1 cup all-purpose flour,1 teaspoon baking powder,1 teaspoon salt,1 teaspoon ground black pepper,1 cup milk,1 egg,1 quart vegetable oil for frying,1.5 pounds cod fillets'},
+{name:'Tea (Green)', id:1, ingredients:'0.5 tablesspoon green tea,1 cup hot water, 2 tablesspoons honey(optional)'},
+{name:'Houmous', id:2, ingredients:'1 clove garlic,250g chickpeas,4 tablespoons lemon juice,2 tablespoons tahini,1 teaspoon salt,black pepper to taste, 2 tablespoons olive oil'}]
 
 
 var Recipes = JSON.parse(localStorage.getItem('recipes')) || defaultRecipes;

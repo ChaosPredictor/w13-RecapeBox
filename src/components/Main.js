@@ -234,13 +234,13 @@ class Dialog extends React.Component {
         {subtitle}
         <input
 					value={this.state.title}
-					onChange={this.handleTitleChange} 
-					className="modalInput"/>
+					onChange={this.handleTitleChange}
+					className='modalInput'/>
 				<textarea
 					value={this.state.body}
 					onFocus={ this.onFocus }
-					onChange={this.handleBodyChange} 
-					className="modalTextArea"/>
+					onChange={this.handleBodyChange}
+					className='modalTextArea'/>
         <form>
 					<button onClick={this.closeModal}>Close</button>
 					{action}

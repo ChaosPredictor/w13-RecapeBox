@@ -19,16 +19,6 @@ if (LastId !== null) {
 	LastId = defaultRecipes.length;
 }
 
-const customStyles = {
-  content : {
-    top                   : '50%',
-    left                  : '50%',
-    right                 : 'auto',
-    bottom                : 'auto',
-    marginRight           : '-50%',
-    transform             : 'translate(-50%, -50%)'
-  }
-};
 
 class Piece extends React.Component {
   constructor(props) {
@@ -198,7 +188,7 @@ class Dialog extends React.Component {
 
   afterOpenModal() {
     // references are now sync'd and can be accessed.
-    this.refs.subtitle.style.color = '#f00';
+    //this.refs.subtitle.style.color = '#f00';
   }
 
   closeModal() {
@@ -229,26 +219,28 @@ class Dialog extends React.Component {
 		var action, subtitle;
 		if (this.state.action == 'Add') {
 			action = <button onClick={this.handleAddItem}>Add</button>;
-			subtitle = <h2 ref="subtitle">Add new recipe</h2>;
+			subtitle = <h2 ref="subtitle">Your new recipe</h2>;
 		} else {
 		  action = <button onClick={this.handleUpdateItem}>Update</button>;
-			subtitle = <h2 ref="subtitle">Edit this one</h2>;
+			subtitle = <h2 ref="subtitle">Chang this one</h2>;
 		}
     return (
       <Modal
         isOpen={this.state.modalIsOpen}
         onAfterOpen={this.afterOpenModal}
         onRequestClose={this.closeModal}
-        style={customStyles}
-        contentLabel="Example Modal">
+        contentLabel="Example Modal"
+				className="content">
         {subtitle}
         <input
 					value={this.state.title}
-					onChange={this.handleTitleChange} />
+					onChange={this.handleTitleChange} 
+					className="modalInput"/>
 				<textarea
 					value={this.state.body}
 					onFocus={ this.onFocus }
-					onChange={this.handleBodyChange} />
+					onChange={this.handleBodyChange} 
+					className="modalTextArea"/>
         <form>
 					<button onClick={this.closeModal}>Close</button>
 					{action}
